@@ -95,12 +95,12 @@ public class HttpReaderTest {
 	 * Uncomment to execute test only when the mock server is not enough.
 	 * @throws IOException 
 	 */
-	@Test
-	public void testRealRequest() throws IOException {
-		final String body = "[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]";
-		   
-	    reader = new HttpReader("http://api.goeuro.com" + serviceURL);
-	    
-	    assertEquals(body, reader.read());
-	}
+//	@Test
+//	public void testRealRequest() throws IOException {
+//		final String body = "[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]";
+//		   
+//	    reader = new HttpReader("http://api.goeuro.com" + serviceURL);
+//	    
+//	    assertEquals(body, reader.read());
+//	}
 }
