@@ -7,12 +7,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Send GET requests to an specific HTTP service and provides access
- * to the raw answer.
+ * HttpReader is the class responsible to send GET requests to
+ * specific HTTP services and provide access to the responses.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class HttpReader {
+public class HttpReader implements Reader {
 	
 	
 	private OkHttpClient client;
@@ -30,12 +30,13 @@ public class HttpReader {
 	}
 
 
-	/**
-	 * Sends the GET request to the service and retrieves the response info.
-	 * @return A String containing the raw answer.
-	 * @throws IOException If the connection can't be established, is interrupted
-	 *         or the response has an error status code.
+	
+	/* (non-Javadoc)
+	 * Fails if the connection can't be established, is interrupted
+	 * or the HTTP response has an error status code.
+	 * @see input.Reader#read()
 	 */
+	@Override
 	public String read() throws IOException {
 		Response response;
 		String reponseBody;

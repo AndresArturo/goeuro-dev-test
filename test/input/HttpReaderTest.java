@@ -92,7 +92,7 @@ public class HttpReaderTest {
 	/**
 	 * Tests the query of a real HTTP service.
 	 * Appends a real server's hostname to the simulated service URL to make a real query.
-	 * Uncomment to execute test only when the mock server is not enough.
+	 * Uncomment to execute the test only when the mock server is not enough.
 	 * @throws IOException 
 	 */
 //	@Test

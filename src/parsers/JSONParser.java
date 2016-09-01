@@ -1,4 +1,4 @@
-package input;
+package parsers;
 
 import java.text.ParseException;
 import java.util.HashMap;
@@ -22,31 +22,22 @@ import org.json.JSONObject;
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class JSONParser {
+public class JSONParser implements Parser {
+	
 	
 	private LinkedList<Map<String,Object>> objMapped; //Objects mapped
-	private String delimiter;
+	
 	
 	public JSONParser() {
 		objMapped = new LinkedList<Map<String,Object>>();
-		delimiter = ".";
-	}
-	
-	public JSONParser(String hierarchyDelimiter) {
-		this();
-		delimiter = hierarchyDelimiter;
 	}
 
-	/**
-	 * Parses a raw string into the final Map objects and stores them.
-	 * The JSON string can either be a single object or an array of
-	 * them, in which case it will parse everyone into its own.
-	 * <p>
-	 * Adds the new generated Maps to the list of parsed objects.
-	 * @param rawJSON A String representing a JSON object.
-	 * @throws ParseException If the String is not a valid JSON object.
+	
+	/* (non-Javadoc)
+	 * @see parsers.Parser#parseString(java.lang.String)
 	 */
-	public void parseString(String rawJSON) throws ParseException {
+	@Override
+	public void parse(String rawJSON) throws ParseException {
 		JSONArray jArray;
 		
 		if(!rawJSON.startsWith("["))
@@ -58,7 +49,7 @@ public class JSONParser {
 			throw new ParseException("Error parsing the raw JSON string", 0);
 		}
 		
-		jArray.forEach(jObj -> objMapped.add(parseSingleObject(jObj)));
+		jArray.forEach(jObj -> objMapped.add(parseSingleJSON(jObj)));
 		
 //		objMapped = StreamSupport.stream(jArray.spliterator(), false)
 //				.map(jObj -> parse(jObj))
@@ -66,22 +57,23 @@ public class JSONParser {
 		
 	}
 	
+	
 	/**
 	 * Parses a single JSON object or array into a flat Map.
-	 * @param jObj The JSONObject or JSONArray to parse
+	 * @param jObj The JSONObject or JSONArray to parse.
 	 * @return The Map representation of the JSON object or an empty Map
 	 * 		   if the object passed is another type.
 	 * @see Map
 	 * @see JSONObject
 	 * @see JSONArray
 	 */
-	public Map<String,Object> parseSingleObject(Object jObj) {
+	public Map<String,Object> parseSingleJSON(Object jObj) {
 		Map<String,Object> map = new HashMap<>();
 		
 		if(jObj instanceof JSONObject)
-			parse(map, "", (JSONObject) jObj);
+			parseJSON(map, "", (JSONObject) jObj);
 		else
-			parse(map, "", (JSONArray) jObj);
+			parseJSON(map, "", (JSONArray) jObj);
 		
 		return map;
 	}
@@ -92,16 +84,16 @@ public class JSONParser {
 	 * @param map The Map where to store the parsed object.
 	 * @param baseName The key's name hierarchy accumulated from previous calls. 
 	 * @param toParse The object to parse.
-	 * @see #parse(Map,String,JSONArray)
+	 * @see #parseJSON(Map,String,JSONArray)
 	 */
-	public void parse(Map<String,Object> map, String baseName, JSONObject toParse) {
+	private void parseJSON(Map<String,Object> map, String baseName, JSONObject toParse) {
 		toParse.keys().forEachRemaining(key -> {
 			Object value = parseJSONVal(toParse.get(key));
 			
 			if(value instanceof JSONObject)
-				parse(map, baseName+key+delimiter, (JSONObject) value);
+				parseJSON(map, baseName+key+Parser.DELIMITER, (JSONObject) value);
 			else if(value instanceof JSONArray) 
-				parse(map, baseName+key+delimiter, (JSONArray) value);
+				parseJSON(map, baseName+key+Parser.DELIMITER, (JSONArray) value);
 			else
 				map.put(baseName+key, value);
 		});
@@ -113,9 +105,9 @@ public class JSONParser {
 	 * @param map The Map where to store the parsed object.
 	 * @param baseName The key's name hierarchy accumulated from previous calls. 
 	 * @param toParse The object to parse.
-	 * @see #parse(Map,String,JSONObject)
+	 * @see #parseJSON(Map,String,JSONObject)
 	 */
-	public void parse(Map<String,Object> map, String baseName, JSONArray toParse) {
+	private void parseJSON(Map<String,Object> map, String baseName, JSONArray toParse) {
 		Object jObj;
 		
 		for(int objI=0; objI < toParse.length(); objI++) 
@@ -123,9 +115,9 @@ public class JSONParser {
 			jObj = parseJSONVal(toParse.get(objI));
 			
 			if(jObj instanceof JSONObject)
-				parse(map, baseName+objI+delimiter, (JSONObject) jObj);
+				parseJSON(map, baseName+objI+Parser.DELIMITER, (JSONObject) jObj);
 			else if(jObj instanceof JSONArray)
-				parse(map, baseName+objI+delimiter, (JSONArray) jObj);
+				parseJSON(map, baseName+objI+Parser.DELIMITER, (JSONArray) jObj);
 			else
 				map.put(baseName+objI, jObj);
 		}
@@ -134,7 +126,7 @@ public class JSONParser {
 	
 	/**
 	 * Parses a single JSON value in accordance to Java types.
-	 * @param val The JSON value to parse
+	 * @param val The JSON value to parse.
 	 * @return A precise representation of the JSON value in a Java Type.
 	 */
 	public Object parseJSONVal(Object val) {
@@ -148,11 +140,19 @@ public class JSONParser {
 	}
 	
 
+	/* (non-Javadoc)
+	 * @see parsers.Parser#nextMap()
+	 */
+	@Override
 	public Map<String,Object> nextMap() {
 		return objMapped.removeFirst();
 	}
 
-	public Object mapsCount() {
+	/* (non-Javadoc)
+	 * @see parsers.Parser#mapsCount()
+	 */
+	@Override
+	public int mapsCount() {
 		return objMapped.size();
 	}
 
