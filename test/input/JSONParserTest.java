@@ -3,14 +3,14 @@
  */
 package input;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+import java.text.ParseException;
 import java.util.Map;
 
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -25,7 +25,7 @@ import org.junit.Test;
  * The functionality of JSON Parser should be:
  * <ul>
  * <li>Parse a raw String into an easy-to-manipulate JSON representation.
- * <li>Parse each JSON object into a flat Map hierarchy.
+ * <li>Parse each JSON object into a flat Map hierarchy as defined above.
  * </ul>
  * @author Andres Arturo Sanchez Dorantes
  *
@@ -39,34 +39,45 @@ public class JSONParserTest {
 		parser = new JSONParser();
 	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	@Test
-	public void testStringToJSON() {
-		parser.parse("{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}}");
+	public void testJSONParsing() throws ParseException {
+		Map<String, Object> mappedJSON;
 		
-		assertEquals("Leipzig, Germany", parser.get("fullName"));
-		assertNull(parser.get("iata_airport_code"));
-		assertEquals(51.33962, parser.get("geo_position.latitude"));
-		assertEquals("Saksonia - Lipsk", parser.get("alternativeNames.pl.0"));
+		parser.parseString("{\"int\":379,\"null\":null,\"string\":\"string\","
+				    + "\"bool\":true,\"float\":3.1415}");
+		assertEquals(1, parser.mapsCount());
+		mappedJSON = parser.nextMap(); //Parsing of JSON and behavior of list of Maps 
+		assertEquals(0, parser.mapsCount());
+		
+		assertEquals(379, mappedJSON.get("int")); //Parsing of JSON int numbers
+		assertNull(mappedJSON.get("null")); //Parsing of JSON null values
+		assertEquals("string", mappedJSON.get("string")); //Parsing of JSON strings
+		assertTrue((Boolean) mappedJSON.get("bool")); //Parsing of JSON boolean values
+		assertEquals(3.1415, mappedJSON.get("float")); //Parsing of JSON floating-point numbers
+		
+		try {
+			parser.parseString("{non-compliant json string here}"); //Test correct JSON parsing
+			assertTrue(false);
+		} catch(ParseException e) {
+			assertEquals("Error parsing the raw JSON string", e.getMessage());
+		}
 	}
 	
 	
 	@Test
-	public void JSONToMap() {
-		Map mappedJSON;
+	public void testJSONToMapParsing() throws ParseException {
+		Map<String, Object> mappedJSON1, mappedJSON2, mappedJSON3;
 		
-		parser.parse("[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]");
-		mappedJSON = parser.getMap(1);
+		parser.parseString("[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]");
 		
-		assertEquals(2, parser.mapsCount());
+		assertEquals(3, parser.mapsCount());
+		mappedJSON1 = parser.nextMap();
+		mappedJSON2 = parser.nextMap();
+		mappedJSON3 = parser.nextMap();
 		
-		assertEquals("Leipzig, Germany", mappedJSON.get("fullName"));
-		assertNull(mappedJSON.get("iata_airport_code"));
-		assertEquals(51.33962, mappedJSON.get("geo_position.latitude"));
-		assertEquals("Saksonia - Lipsk", mappedJSON.get("alternativeNames.pl.0"));
+		assertEquals(12.22014, mappedJSON3.get("geo_position.longitude")); //One level of objects nesting
+		assertEquals(51.20061, mappedJSON2.get("geo_position.latitude")); //One level of objects nesting
+		assertEquals("Saksonia - Lipsk", mappedJSON1.get("alternativeNames.pl.0")); //One level object and array nesting
 	}
 
 }
