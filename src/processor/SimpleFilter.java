@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class SimpleFilter {
+public class SimpleFilter implements MapProcessor {
 	
 	/**
 	 * The list of attributes to preserve.
@@ -40,6 +40,7 @@ public class SimpleFilter {
 	 * @param originalObj The original Map containing all the attributes.
 	 * @return The filtered Map.
 	 */
+	@Override
 	public Map<String, Object> process(Map<String, Object> originalObj) {
 		Map<String, Object> newObj = new HashMap<>();
 		

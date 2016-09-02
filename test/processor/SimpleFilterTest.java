@@ -29,7 +29,7 @@ import org.junit.Test;
 public class SimpleFilterTest {
 
 	private Map<String, Object> originalObj;
-	private SimpleFilter filter;
+	private MapProcessor filter;
 	
 	/**
 	 * @throws java.lang.Exception
