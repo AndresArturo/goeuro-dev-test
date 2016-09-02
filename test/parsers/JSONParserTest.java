@@ -16,7 +16,7 @@ import org.junit.Test;
 import parsers.JSONParser;
 
 /**
- * Tests the JSON Parser class.
+ * Tests the JSONParser class.
  * The class responsibility is to interpret a raw String as JSON to
  * parse it to a flat Map representing nested objects by '.'-separated 
  * key hierarchies.
@@ -24,7 +24,7 @@ import parsers.JSONParser;
  * Example: For a JSON of the form {"attr1":"val1","attr2":{"attr1":val2,"attr2":"val3"}}
  * The expected Map should be ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
  * <p>
- * The functionality of JSON Parser should be:
+ * The functionality of JSONParser should be:
  * <ul>
  * <li>Parse a raw String into an easy-to-manipulate JSON representation.
  * <li>Parse each JSON object into a flat Map hierarchy as defined above.
