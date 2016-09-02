@@ -1,7 +1,7 @@
 /**
  * Test class created following the TDD process.
  */
-package processor;
+package transformations;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,9 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import transformations.Transformation;
+import transformations.SimpleFilter;
 
 /**
  * Tests the SimpleFilter class.
@@ -29,7 +32,7 @@ import org.junit.Test;
 public class SimpleFilterTest {
 
 	private Map<String, Object> originalObj;
-	private MapProcessor filter;
+	private SimpleFilter filter;
 	
 	/**
 	 * @throws java.lang.Exception

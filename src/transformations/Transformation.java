@@ -1,15 +1,15 @@
-package processor;
+package transformations;
 
 import java.util.Map;
 
 /**
- * Provides a common interface to processors of Map objects.
+ * Provides a common interface to transform Map objects.
  * <p>
- * Example of processes can be Filtering, Ordering, Reducing, etc.
+ * Example of transformations can be Filtering, Ordering, Reducing, etc.
  * <p>
  * @author Andres Arturo Sanchez Dorantes
  */
-public interface MapProcessor {
+public interface Transformation {
 
 	/**
 	 * Creates a new Map as a result of applying some operations on

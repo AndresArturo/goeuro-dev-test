@@ -1,4 +1,4 @@
-package processor;
+package transformations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class SimpleFilter implements MapProcessor {
+public class SimpleFilter implements Transformation {
 	
 	/**
 	 * The list of attributes to preserve.
