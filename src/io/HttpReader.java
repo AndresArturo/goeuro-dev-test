@@ -17,23 +17,25 @@ public class HttpReader implements Reader {
 	
 	private OkHttpClient client;
 	private Request request;
+	private boolean dataLeft;
 	
 	
 	/**
 	 * @param httpUrl The complete URL of the service to query.
 	 */
 	public HttpReader(String httpUrl) {
+		dataLeft = false;
 		client = new OkHttpClient();
 		request = new Request.Builder()
 				.url(httpUrl)
 				.build();
 	}
 
-
 	
 	/* (non-Javadoc)
 	 * Fails if the connection can't be established, is interrupted
 	 * or the HTTP response has an error status code.
+	 * Returns the whole response not chunks.
 	 * @see input.Reader#read()
 	 */
 	@Override
@@ -49,6 +51,15 @@ public class HttpReader implements Reader {
 			throw new IOException("HTTP server responded with an error status code");
 
 		return reponseBody;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see input.Reader#isDataLeft()
+	 */
+	@Override
+	public boolean isDataLeft() {	
+		return dataLeft;
 	}
 	
 	
