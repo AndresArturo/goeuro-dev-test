@@ -5,7 +5,7 @@ package parsers;
 
 import static org.junit.Assert.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +33,7 @@ import org.junit.Test;
 public class CSVParserTest {
 	
 	private CSVParser csv;
-	private HashMap<String, Object> map;
+	private LinkedHashMap<String, Object> map;
 
 	/**
 	 * @throws java.lang.Exception
@@ -41,7 +41,7 @@ public class CSVParserTest {
 	@Before
 	public void setUp() throws Exception {
 		csv = new CSVParser(",");
-		map = new HashMap<>();
+		map = new LinkedHashMap<>();
 		
 		map.put("string", "test string");
 		map.put("string.firstPart", "test");
