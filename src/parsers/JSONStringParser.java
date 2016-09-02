@@ -10,25 +10,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JSONParser is the class responsible for parsing string 
+ * JSONStringParser is the class responsible for parsing string 
  * representations of JSON objects.
  * A JSONParser object provides the algorithms to parse a raw
  * string-represented JSON object into a flat Map<String,Object>
  * representing object hierarchies by 'delimiter'-separated keys.
  * <p>
- * Each JSONParser object manages a list of the Maps generated
+ * Each JSONStringParser object manages a list of the Maps generated
  * and provides access to them.
  * 
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class JSONParser implements Parser {
+public class JSONStringParser implements StringParser {
 	
 	
 	private LinkedList<Map<String,Object>> objMapped; //Objects mapped
 	
 	
-	public JSONParser() {
+	public JSONStringParser() {
 		objMapped = new LinkedList<Map<String,Object>>();
 	}
 
@@ -37,7 +37,7 @@ public class JSONParser implements Parser {
 	 * @see parsers.Parser#parseString(java.lang.String)
 	 */
 	@Override
-	public void parse(String rawJSON) throws ParseException {
+	public void parseString(String rawJSON) throws ParseException {
 		JSONArray jArray;
 		
 		if(!rawJSON.startsWith("["))
@@ -91,9 +91,9 @@ public class JSONParser implements Parser {
 			Object value = parseJSONVal(toParse.get(key));
 			
 			if(value instanceof JSONObject)
-				parseJSON(map, baseName+key+Parser.DELIMITER, (JSONObject) value);
+				parseJSON(map, baseName+key+StringParser.DELIMITER, (JSONObject) value);
 			else if(value instanceof JSONArray) 
-				parseJSON(map, baseName+key+Parser.DELIMITER, (JSONArray) value);
+				parseJSON(map, baseName+key+StringParser.DELIMITER, (JSONArray) value);
 			else
 				map.put(baseName+key, value);
 		});
@@ -115,9 +115,9 @@ public class JSONParser implements Parser {
 			jObj = parseJSONVal(toParse.get(objI));
 			
 			if(jObj instanceof JSONObject)
-				parseJSON(map, baseName+objI+Parser.DELIMITER, (JSONObject) jObj);
+				parseJSON(map, baseName+objI+StringParser.DELIMITER, (JSONObject) jObj);
 			else if(jObj instanceof JSONArray)
-				parseJSON(map, baseName+objI+Parser.DELIMITER, (JSONArray) jObj);
+				parseJSON(map, baseName+objI+StringParser.DELIMITER, (JSONArray) jObj);
 			else
 				map.put(baseName+objI, jObj);
 		}

@@ -15,7 +15,7 @@ import java.util.Map;
  * <p>
  * @author Andres Arturo Sanchez Dorantes
  */
-public interface Parser {
+public interface StringParser {
 
 	/**
 	 * A constant value representing the delimiter of nesting levels
@@ -34,7 +34,7 @@ public interface Parser {
 	 * @param stringInfo A String representing a JSON object.
 	 * @throws ParseException If the String is not a valid JSON object.
 	 */
-	public void parse(String stringInfo) throws ParseException;
+	public void parseString(String stringData) throws ParseException;
 
 	/**
 	 * Retrieves the next Map-like object parsed.

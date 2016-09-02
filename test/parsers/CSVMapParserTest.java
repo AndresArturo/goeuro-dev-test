@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the CSVParser class.
+ * Tests the CSVMapParser class.
  * The class responsibility is to parse a single flat Map representation 
  * of objects into a CSV formatted String of the form:
  * <p>
@@ -23,16 +23,16 @@ import org.junit.Test;
  * Example: For a JSON of the form {"attr1":"val1","attr2":{"attr1":val2,"attr2":"val3"}}
  * The expected Map should be ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
  * <p>
- * The functionality of CSVParser should be:
+ * The functionality of CSVMapParser should be:
  * <ul>
  * <li>Parse one single flat Map into a String.
  * </ul>
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class CSVParserTest {
+public class CSVMapParserTest {
 	
-	private CSVParser csv;
+	private CSVMapParser csv;
 	private LinkedHashMap<String, Object> map;
 
 	/**
@@ -40,7 +40,7 @@ public class CSVParserTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		csv = new CSVParser(",");
+		csv = new CSVMapParser(",");
 		map = new LinkedHashMap<>();
 		
 		map.put("string", "test string");
@@ -52,7 +52,7 @@ public class CSVParserTest {
 	}
 
 	/**
-	 * Test method for {@link parsers.CSVParser#parse(java.util.HashMap)}.
+	 * Test method for {@link parsers.CSVMapParser#parse(Map<String,Object>)}.
 	 */
 	@Test
 	public void testMapToStringParsing() {

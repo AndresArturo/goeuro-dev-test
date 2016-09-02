@@ -1,7 +1,7 @@
 /**
  * Test class created following the TDD process.
  */
-package input;
+package io;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
