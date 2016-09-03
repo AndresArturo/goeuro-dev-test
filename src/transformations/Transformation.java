@@ -12,7 +12,7 @@ import java.util.Map;
 public interface Transformation {
 
 	/**
-	 * Creates a new Map as a result of applying some operations on
+	 * Creates a new Map as a result of applying some transformation on
 	 * an original one.
 	 * @param originalObj The original Map containing all the attributes.
 	 * @return The processed Map.

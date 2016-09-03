@@ -42,13 +42,13 @@ public class SimpleFilter implements Transformation {
 	 */
 	@Override
 	public Map<String, Object> process(Map<String, Object> originalObj) {
-		Map<String, Object> newObj = new HashMap<>();
+		Map<String, Object> filteredObj = new HashMap<>();
 		
 		for(String attr : wantedAttr)
 			if(originalObj.containsKey(attr))
-				newObj.put(attr, originalObj.get(attr));
+				filteredObj.put(attr, originalObj.get(attr));
 		
-		return newObj;
+		return filteredObj;
 	}
 
 	

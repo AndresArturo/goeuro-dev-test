@@ -11,21 +11,20 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
-import transformations.Transformation;
-import transformations.SimpleFilter;
 
 /**
  * Tests the SimpleFilter class.
  * The class responsibility is to filter unwanted attributes off of a Map.
  * <p>
  * Example: If there is a Map ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
- * and only "attr1" and "arrt2.attr2" are wanted then the resulting map should be
+ * and only "attr1" and "arrt2.attr2" are wanted then the resulting Map should be
  * ["attr1":"val1","attr2.attr2":"val3"]
  * <p>
  * The functionality of SimpleFilter should be:
  * <ul>
- * <li>Create a new Map containing only the desired attributes.
+ * <li>Create a new Map containing at most the desired attributes.
  * </ul>
+ * 
  * @author Andres Arturo Sanchez Dorantes
  *
  */
@@ -63,7 +62,7 @@ public class SimpleFilterTest {
 	
 	
 	@Test
-	public void testMissingKey() {
+	public void testExtraFilteringRule() {
 		originalObj.remove("attr2.attr2_2");
 		Map<String, Object> result = filter.process(originalObj);
 		
