@@ -41,7 +41,7 @@ public class SimpleFilter implements Transformation {
 	 * @return The filtered Map.
 	 */
 	@Override
-	public Map<String, Object> process(Map<String, Object> originalObj) {
+	public Map<String, Object> transform(Map<String, Object> originalObj) {
 		Map<String, Object> filteredObj = new HashMap<>();
 		
 		for(String attr : wantedAttr)

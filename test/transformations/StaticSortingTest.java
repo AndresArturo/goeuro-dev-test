@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Tests the StaticOrdering class.
+ * Tests the StaticSort class.
  * The class responsibility is to rearrange the attributes of a Map
  * given a static predefined order of them.
  * <p>
@@ -23,14 +23,14 @@ import org.junit.Test;
  * and the order wanted is "arrt2.attr1"->"arrt2.attr2"->"attr1" then the resulting Map
  * should be ["attr1":"val1","attr2.attr2":"val3"]
  * <p>
- * The functionality of StaticOrdering should be:
+ * The functionality of StaticSort should be:
  * <ul>
  * <li>Order the attributes of a Map producing a new one.
  * </ul>
  * 
  * @author Andres Arturo Sanchez Dorantes
  */
-public class StaticOrderingTest {
+public class StaticSortingTest {
 
 	private Map<String, Object> originalObj;
 	private List<String> orderedKeys;
@@ -57,7 +57,7 @@ public class StaticOrderingTest {
 	
 	@Test
 	public void testStaticOrdering() {
-		Map<String, Object> orderedMap = new StaticOrdering(orderedKeys).process(originalObj);
+		Map<String, Object> orderedMap = new StaticSort(orderedKeys).transform(originalObj);
 		Iterator<Object> itr = orderedMap.values().iterator();
 		
 		assertEquals("val3", itr.next());
@@ -75,7 +75,7 @@ public class StaticOrderingTest {
 		originalObj.put("newAttr", "val7");
 		orderedKeys.set(2, "newAttr");
 		orderedKeys.set(4, "");
-		Map<String, Object> orderedMap = new StaticOrdering(orderedKeys).process(originalObj);
+		Map<String, Object> orderedMap = new StaticSort(orderedKeys).transform(originalObj);
 		Iterator<Object> itr = orderedMap.values().iterator();
 		
 		assertEquals("val3", itr.next());

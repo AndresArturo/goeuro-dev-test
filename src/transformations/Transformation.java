@@ -17,6 +17,6 @@ public interface Transformation {
 	 * @param originalObj The original Map containing all the attributes.
 	 * @return The processed Map.
 	 */
-	public Map<String, Object> process(Map<String, Object> originalObj);
+	public Map<String, Object> transform(Map<String, Object> originalObj);
 
 }

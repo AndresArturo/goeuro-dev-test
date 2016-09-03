@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * StaticOrdering is the class responsible for rearranging the
+ * StaticSort is the class responsible for rearranging the
  * attributes of a Map given a static predefined order of them.
- * A StaticOrdering object sorts the Map based on a statically
+ * A StaticSort object sorts the Map based on a statically
  * provided order for its keys.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class StaticOrdering implements Transformation {
+public class StaticSort implements Transformation {
 	
 	/**
 	 * The list of attributes to preserve.
@@ -23,12 +23,12 @@ public class StaticOrdering implements Transformation {
 	private ArrayList<String> orderedAttr;
 	
 	
-	public StaticOrdering(List<String> attributes) {
+	public StaticSort(List<String> attributes) {
 		this.orderedAttr = new ArrayList<>(attributes);
 	}
 	
 	
-	public StaticOrdering(String... attributes) {
+	public StaticSort(String... attributes) {
 		this(Arrays.asList(attributes));
 	}
 
@@ -41,7 +41,7 @@ public class StaticOrdering implements Transformation {
 	 * @return The ordered Map.
 	 */
 	@Override
-	public Map<String, Object> process(Map<String, Object> originalObj) {
+	public Map<String, Object> transform(Map<String, Object> originalObj) {
 		LinkedHashMap<String, Object> orderedObj = new LinkedHashMap<>();
 		
 		for(String attr : orderedAttr)
