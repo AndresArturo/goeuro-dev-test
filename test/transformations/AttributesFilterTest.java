@@ -13,14 +13,14 @@ import org.junit.Test;
 
 
 /**
- * Tests the SimpleFilter class.
+ * Tests the AttributesFilter class.
  * The class responsibility is to filter unwanted attributes off of a Map.
  * <p>
  * Example: If there is a Map ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
  * and only "attr1" and "arrt2.attr2" are wanted then the resulting Map should be
  * ["attr1":"val1","attr2.attr2":"val3"]
  * <p>
- * The functionality of SimpleFilter should be:
+ * The functionality of AttributesFilter should be:
  * <ul>
  * <li>Create a new Map containing at most the desired attributes.
  * </ul>
@@ -28,10 +28,10 @@ import org.junit.Test;
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class SimpleFilterTest {
+public class AttributesFilterTest {
 
 	private Map<String, Object> originalObj;
-	private SimpleFilter filter;
+	private AttributesFilter filter;
 	
 	/**
 	 * @throws java.lang.Exception
@@ -46,12 +46,12 @@ public class SimpleFilterTest {
 		originalObj.put("attr3.attr3_1.0", "val5");
 		originalObj.put("attr3.attr3_1.1", "val6");
 		
-		filter = new SimpleFilter("attr1", "attr2.attr2_2", "attr3.attr3_1.1");
+		filter = new AttributesFilter("attr1", "attr2.attr2_2", "attr3.attr3_1.1");
 	}
 
 	@Test
 	public void testFilterAttributes() {
-		Map<String, Object> result = filter.individualTransformation(originalObj);
+		Map<String, Object> result = filter.transformMap(originalObj);
 		
 		assertEquals(3, result.values().size());
 		assertEquals("val1", result.get("attr1"));
@@ -64,7 +64,7 @@ public class SimpleFilterTest {
 	@Test
 	public void testExtraFilteringRule() {
 		originalObj.remove("attr2.attr2_2");
-		Map<String, Object> result = filter.individualTransformation(originalObj);
+		Map<String, Object> result = filter.transformMap(originalObj);
 		
 		assertEquals(2, result.values().size());
 		assertEquals("val1", result.get("attr1"));

@@ -5,17 +5,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
- * SimpleFilter is the class responsible for cleaning unwanted 
+ * AttributesFilter is the class responsible for cleaning unwanted 
  * attributes off of a Map.
- * A SimpleFilter object provides the algorithm to generate new
+ * A AttributesFilter object provides the algorithm to generate new
  * Maps containing only desired attributes.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class SimpleFilter implements Transformation {
+public class AttributesFilter extends Transformation {
 	
 	/**
 	 * The list of attributes to preserve.
@@ -23,12 +22,12 @@ public class SimpleFilter implements Transformation {
 	private ArrayList<String> wantedAttr;
 	
 	
-	public SimpleFilter(List<String> attributes) {
+	public AttributesFilter(List<String> attributes) {
 		this.wantedAttr = new ArrayList<>(attributes);
 	}
 	
 
-	public SimpleFilter(String... attributes) {
+	public AttributesFilter(String... attributes) {
 		this(Arrays.asList(attributes));
 	}
 	
@@ -41,7 +40,8 @@ public class SimpleFilter implements Transformation {
 	 * @param originalObj The original Map containing all the attributes.
 	 * @return The filtered Map.
 	 */
-	public Map<String, Object> individualTransformation(Map<String, Object> originalObj) {
+	@Override
+	public Map<String, Object> transformMap(Map<String, Object> originalObj) {
 		Map<String, Object> filteredObj = new HashMap<>();
 		
 		for(String attr : wantedAttr)
@@ -49,16 +49,6 @@ public class SimpleFilter implements Transformation {
 				filteredObj.put(attr, originalObj.get(attr));
 		
 		return filteredObj;
-	}
-
-
-	@Override
-	public List<Map<String, Object>> transform(List<Map<String, Object>> originalMaps) {
-		
-		return originalMaps.stream()
-				.map(this::individualTransformation)
-				.collect(Collectors.toCollection(ArrayList::new));
-		
 	}
 	
 

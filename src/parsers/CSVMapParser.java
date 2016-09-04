@@ -49,6 +49,10 @@ public class CSVMapParser implements MapParser {
 	}
 
 
+	/* (non-Javadoc)
+	 * Appends each Map parsed as a new line to the string
+	 * @see parsers.MapParser#parseMaps(java.util.List)
+	 */
 	@Override
 	public String parseMaps(List<Map<String, Object>> maps) {
 		return maps.stream()
