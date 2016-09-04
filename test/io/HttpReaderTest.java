@@ -20,7 +20,7 @@ import okhttp3.mockwebserver.MockWebServer;
 
 /**
  * Tests the HTTP Reader class.
- * The class responsibility is to read raw data from Get petitions.
+ * The class responsibility is to read raw data from HTTP GET petitions.
  * <p>
  * The functionality of HTTP Reader should be:
  * <ul>

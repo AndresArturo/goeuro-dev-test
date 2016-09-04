@@ -6,12 +6,13 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * StaticSort is the class responsible for rearranging the
  * attributes of a Map given a static predefined order of them.
- * A StaticSort object sorts the Map based on a statically
- * provided order for its keys.
+ * Represents a sort of attributes on a per-element basis, not
+ * a sort of the list of Maps.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
@@ -37,21 +38,33 @@ public class StaticSort implements Transformation {
 	 * Creates a new ordered Map.
 	 * The new Map contains all the attributes of the original Map whose
 	 * keys match the given order plus the rest of them unordered.
-	 * @param originalObj The original Map to order..
+	 * @param originalMap The original Map to order..
 	 * @return The ordered Map.
 	 */
-	@Override
-	public Map<String, Object> transform(Map<String, Object> originalObj) {
+	public Map<String, Object> attributesSorting(Map<String, Object> originalMap) {
 		LinkedHashMap<String, Object> orderedObj = new LinkedHashMap<>();
 		
 		for(String attr : orderedAttr)
-			if(originalObj.containsKey(attr))
-				orderedObj.put(attr, originalObj.get(attr));
+			if(originalMap.containsKey(attr))
+				orderedObj.put(attr, originalMap.get(attr));
 		
-		orderedObj.putAll(originalObj);
+		orderedObj.putAll(originalMap);
 		
 			
 		return orderedObj;
+	}
+
+
+	/* (non-Javadoc)
+	 * @see transformations.Transformation#transform(java.util.List)
+	 */
+	@Override
+	public List<Map<String, Object>> transform(List<Map<String, Object>> originalMaps) {
+		
+		return originalMaps.stream()
+					.map(this::attributesSorting)
+					.collect(Collectors.toCollection(ArrayList::new));
+		
 	}
 
 }

@@ -57,7 +57,7 @@ public class StaticSortingTest {
 	
 	@Test
 	public void testStaticOrdering() {
-		Map<String, Object> orderedMap = new StaticSort(orderedKeys).transform(originalObj);
+		Map<String, Object> orderedMap = new StaticSort(orderedKeys).attributesSorting(originalObj);
 		Iterator<Object> itr = orderedMap.values().iterator();
 		
 		assertEquals("val3", itr.next());
@@ -75,7 +75,7 @@ public class StaticSortingTest {
 		originalObj.put("newAttr", "val7");
 		orderedKeys.set(2, "newAttr");
 		orderedKeys.set(4, "");
-		Map<String, Object> orderedMap = new StaticSort(orderedKeys).transform(originalObj);
+		Map<String, Object> orderedMap = new StaticSort(orderedKeys).attributesSorting(originalObj);
 		Iterator<Object> itr = orderedMap.values().iterator();
 		
 		assertEquals("val3", itr.next());

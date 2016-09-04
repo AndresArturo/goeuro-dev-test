@@ -24,7 +24,7 @@ public class HttpReader implements Reader {
 	 * @param httpUrl The complete URL of the service to query.
 	 */
 	public HttpReader(String httpUrl) {
-		dataLeft = false;
+		dataLeft = true;
 		client = new OkHttpClient();
 		request = new Request.Builder()
 				.url(httpUrl)
@@ -43,9 +43,13 @@ public class HttpReader implements Reader {
 		Response response;
 		String reponseBody;
 		
-		response = client.newCall(request).execute();
-		reponseBody = response.body().string();
-		response.close();
+		try {
+			response = client.newCall(request).execute();
+			reponseBody = response.body().string();
+			response.close();
+		} finally {
+			dataLeft = false;
+		}
 		
 		if(!response.isSuccessful())
 			throw new IOException("HTTP server responded with an error status code");

@@ -1,6 +1,7 @@
 package parsers;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -29,25 +30,10 @@ public interface StringParser {
 	 * The data to parse can either represent a single object or an
 	 * array of them, in which case it will parse every one into a
 	 * new Map.
-	 * <p>
-	 * Adds the new generated Maps to the list of parsed objects.
 	 * @param stringInfo A String representing a JSON object.
 	 * @throws ParseException If the String is not a valid JSON object.
+	 * @return A List containing the resulting Maps.
 	 */
-	public void parseString(String stringData) throws ParseException;
-
-	/**
-	 * Retrieves the next Map-like object parsed.
-	 * First object parsed first object returned.
-	 * Each object is retrieved only ones after invocation of this method.
-	 * @return The Map representation of a parsed object.
-	 */
-	public Map<String, Object> nextMap();
-
-	/**
-	 * Retrieves the number of parsed objects still in list.
-	 * @return The number of parsed objects still available.
-	 */
-	public int mapsCount();
+	public List<Map<String,Object>> parseString(String stringData) throws ParseException;
 
 }

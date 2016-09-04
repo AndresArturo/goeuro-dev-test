@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * SimpleFilter is the class responsible for cleaning unwanted 
@@ -40,8 +41,7 @@ public class SimpleFilter implements Transformation {
 	 * @param originalObj The original Map containing all the attributes.
 	 * @return The filtered Map.
 	 */
-	@Override
-	public Map<String, Object> transform(Map<String, Object> originalObj) {
+	public Map<String, Object> individualTransformation(Map<String, Object> originalObj) {
 		Map<String, Object> filteredObj = new HashMap<>();
 		
 		for(String attr : wantedAttr)
@@ -51,6 +51,15 @@ public class SimpleFilter implements Transformation {
 		return filteredObj;
 	}
 
+
+	@Override
+	public List<Map<String, Object>> transform(List<Map<String, Object>> originalMaps) {
+		
+		return originalMaps.stream()
+				.map(this::individualTransformation)
+				.collect(Collectors.toCollection(ArrayList::new));
+		
+	}
 	
 
 }

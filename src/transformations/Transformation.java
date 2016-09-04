@@ -1,5 +1,6 @@
 package transformations;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,13 +11,13 @@ import java.util.Map;
  * @author Andres Arturo Sanchez Dorantes
  */
 public interface Transformation {
-
+	
 	/**
-	 * Creates a new Map as a result of applying some transformation on
-	 * an original one.
-	 * @param originalObj The original Map containing all the attributes.
-	 * @return The processed Map.
+	 * Creates a new list of Maps as a result of applying a transformation
+	 * on the original objects.
+	 * @param originalMaps The original Map containing all the attributes.
+	 * @return The processed list of Maps.
 	 */
-	public Map<String, Object> transform(Map<String, Object> originalObj);
+	public List<Map<String, Object>> transform(List<Map<String, Object>> originalMaps);
 
 }

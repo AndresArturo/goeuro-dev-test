@@ -8,6 +8,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.text.ParseException;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -43,14 +44,14 @@ public class JSONStringParserTest {
 
 	@Test
 	public void testStringToJSONParsing() throws ParseException {
+		List<Map<String, Object>> mappedJSONs;
 		Map<String, Object> mappedJSON;
 		
-		parser.parseString("{\"int\":379,\"null\":null,\"string\":\"string\","
-				    + "\"bool\":true,\"float\":3.1415}");
-		assertEquals(1, parser.mapsCount());
-		mappedJSON = parser.nextMap(); //Parsing of JSON and behavior of list of Maps 
-		assertEquals(0, parser.mapsCount());
+		mappedJSONs = parser.parseString("{\"int\":379,\"null\":null,\"string\":\"string\","
+				                       + "\"bool\":true,\"float\":3.1415}");
+		assertEquals(1, mappedJSONs.size());
 		
+		mappedJSON = mappedJSONs.get(0);
 		assertEquals(379, mappedJSON.get("int")); //Parsing of JSON int numbers
 		assertNull(mappedJSON.get("null")); //Parsing of JSON null values
 		assertEquals("string", mappedJSON.get("string")); //Parsing of JSON strings
@@ -68,18 +69,15 @@ public class JSONStringParserTest {
 	
 	@Test
 	public void testJSONToMapParsing() throws ParseException {
-		Map<String, Object> mappedJSON1, mappedJSON2, mappedJSON3;
+		List<Map<String, Object>> mappedJSONs;
 		
-		parser.parseString("[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]");
+		mappedJSONs = parser.parseString("[{\"_id\":376809,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig, Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.33962,\"longitude\":12.37129},\"locationId\":8982,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"pt\":\"Lípsia\",\"ru\":\"Лейпциг\",\"it\":\"Lipsia\",\"zh\":\"莱比锡\",\"cs\":\"Lipsko\",\"pl\":\"Lipsk\"},\"alternativeNames\":{\"it\":[\"Sassonia - Lipsia\"],\"es\":[\"Sajonia - Leipzig\"],\"pl\":[\"Saksonia - Lipsk\"],\"pt\":[\"Saxónia - Lípsia\"],\"fr\":[\"Saxe - Leipzig\"],\"ru\":[\"Саксония - Лейпциг\"],\"de\":[\"Sachsen - Leipzig\"],\"zh\":[\"萨克森 - 莱比锡\"],\"en\":[\"Saxony - Leipzig\"],\"cs\":[\"Sasko - Lipsko\"],\"sv\":[\"Sachsen - Leipzig\"],\"ca\":[\"Saxònia - Leipzig\"],\"nl\":[\"Saksen - Leipzig\"]}},{\"_id\":425121,\"key\":null,\"name\":\"Böhlen (Leipzig)\",\"fullName\":\"Böhlen (Leipzig), Germany\",\"iata_airport_code\":null,\"type\":\"location\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.20061,\"longitude\":12.38622},\"locationId\":124459,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{},\"alternativeNames\":{}},{\"_id\":314829,\"key\":null,\"name\":\"Leipzig\",\"fullName\":\"Leipzig (LEJ), Germany\",\"iata_airport_code\":\"LEJ\",\"type\":\"airport\",\"country\":\"Germany\",\"geo_position\":{\"latitude\":51.41974,\"longitude\":12.22014},\"locationId\":null,\"inEurope\":true,\"countryId\":56,\"countryCode\":\"DE\",\"coreCountry\":true,\"distance\":null,\"names\":{\"it\":\"Lipsia\"},\"alternativeNames\":{}}]");
 		
-		assertEquals(3, parser.mapsCount());
-		mappedJSON1 = parser.nextMap();
-		mappedJSON2 = parser.nextMap();
-		mappedJSON3 = parser.nextMap();
+		assertEquals(3, mappedJSONs.size());
 		
-		assertEquals(12.22014, mappedJSON3.get("geo_position.longitude")); //One level of objects nesting
-		assertEquals(51.20061, mappedJSON2.get("geo_position.latitude")); //One level of objects nesting
-		assertEquals("Saksonia - Lipsk", mappedJSON1.get("alternativeNames.pl.0")); //One level object and array nesting
+		assertEquals(12.22014, mappedJSONs.get(2).get("geo_position.longitude")); //One level of objects nesting
+		assertEquals(51.20061, mappedJSONs.get(1).get("geo_position.latitude")); //One level of objects nesting
+		assertEquals("Saksonia - Lipsk", mappedJSONs.get(0).get("alternativeNames.pl.0")); //One level object and array nesting
 	}
 
 }

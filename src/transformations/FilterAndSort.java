@@ -1,9 +1,11 @@
 
 package transformations;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * FilterAndSort responsibility is to Filter and then Sort a Map
@@ -31,12 +33,19 @@ public class FilterAndSort implements Transformation {
 	/**
 	 * Filters and orders a Map.
 	 * Delegates the individual tasks of Filtering and Sorting.
-	 * @see transformations.SimpleFilter#transform(java.util.Map)
-	 * @see transformations.StaticSort#transform(java.util.Map)
+	 * @see transformations.SimpleFilter#individualTransformation(java.util.Map)
+	 * @see transformations.StaticSort#individualTransformation(java.util.Map)
 	 */
+	public Map<String, Object> individualTransformation(Map<String, Object> originalObj) {
+		return sorter.attributesSorting(filter.individualTransformation(originalObj));
+	}
+
+
 	@Override
-	public Map<String, Object> transform(Map<String, Object> originalObj) {
-		return sorter.transform(filter.transform(originalObj));
+	public List<Map<String, Object>> transform(List<Map<String, Object>> originalMaps) {
+		return originalMaps.stream()
+				.map(this::individualTransformation)
+				.collect(Collectors.toCollection(ArrayList::new));
 	}
 
 }

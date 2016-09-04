@@ -3,6 +3,7 @@ package parsers;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
@@ -10,34 +11,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * JSONStringParser is the class responsible for parsing string 
+ * JSONStringParser is the class responsible for parsing String 
  * representations of JSON objects.
  * A JSONParser object provides the algorithms to parse a raw
- * string-represented JSON object into a flat Map<String,Object>
- * representing object hierarchies by 'delimiter'-separated keys.
- * <p>
- * Each JSONStringParser object manages a list of the Maps generated
- * and provides access to them.
+ * String-represented list of JSON objects into a list of flat 
+ * Map<String,Object> each of which represents object hierarchies 
+ * by 'delimiter'-separated keys.
  * 
  * @author Andres Arturo Sanchez Dorantes
  *
  */
 public class JSONStringParser implements StringParser {
-	
-	
-	private LinkedList<Map<String,Object>> objMapped; //Objects mapped
-	
-	
-	public JSONStringParser() {
-		objMapped = new LinkedList<Map<String,Object>>();
-	}
 
 	
 	/* (non-Javadoc)
 	 * @see parsers.Parser#parseString(java.lang.String)
 	 */
 	@Override
-	public void parseString(String rawJSON) throws ParseException {
+	public List<Map<String,Object>> parseString(String rawJSON) throws ParseException {
+		LinkedList<Map<String,Object>> objMapped; //Objects mapped
 		JSONArray jArray;
 		
 		if(!rawJSON.startsWith("["))
@@ -45,6 +37,7 @@ public class JSONStringParser implements StringParser {
 		
 		try {
 			jArray = new JSONArray(rawJSON);
+			objMapped = new LinkedList<>();
 		} catch (JSONException e) {
 			throw new ParseException("Error parsing the raw JSON string", 0);
 		}
@@ -55,6 +48,7 @@ public class JSONStringParser implements StringParser {
 //				.map(jObj -> parse(jObj))
 //				.collect(Collectors.toCollection(LinkedList::new));
 		
+		return objMapped;
 	}
 	
 	
@@ -137,23 +131,6 @@ public class JSONStringParser implements StringParser {
 		}
 		
 		return val;
-	}
-	
-
-	/* (non-Javadoc)
-	 * @see parsers.Parser#nextMap()
-	 */
-	@Override
-	public Map<String,Object> nextMap() {
-		return objMapped.removeFirst();
-	}
-
-	/* (non-Javadoc)
-	 * @see parsers.Parser#mapsCount()
-	 */
-	@Override
-	public int mapsCount() {
-		return objMapped.size();
 	}
 
 }

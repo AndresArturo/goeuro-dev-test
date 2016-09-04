@@ -1,5 +1,6 @@
 package parsers;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,10 +11,10 @@ import java.util.Map;
 public interface MapParser {
 
 	/**
-	 * Parses a flat Map to a specific String representation of it.
-	 * @param map The Map representation of an object to parse.
+	 * Parses flat Maps to a specific String representation of it.
+	 * @param maps The list of Maps to parse.
 	 * @return A String parsed with certain format.
 	 */
-	public String parse(Map<String,Object> map);
+	public String parseMaps(List<Map<String,Object>> maps);
 
 }

@@ -51,7 +51,7 @@ public class SimpleFilterTest {
 
 	@Test
 	public void testFilterAttributes() {
-		Map<String, Object> result = filter.transform(originalObj);
+		Map<String, Object> result = filter.individualTransformation(originalObj);
 		
 		assertEquals(3, result.values().size());
 		assertEquals("val1", result.get("attr1"));
@@ -64,7 +64,7 @@ public class SimpleFilterTest {
 	@Test
 	public void testExtraFilteringRule() {
 		originalObj.remove("attr2.attr2_2");
-		Map<String, Object> result = filter.transform(originalObj);
+		Map<String, Object> result = filter.individualTransformation(originalObj);
 		
 		assertEquals(2, result.values().size());
 		assertEquals("val1", result.get("attr1"));
