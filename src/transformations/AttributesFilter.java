@@ -9,8 +9,8 @@ import java.util.Map;
 /**
  * AttributesFilter is the class responsible for cleaning unwanted 
  * attributes off of a Map.
- * A AttributesFilter object provides the algorithm to generate new
- * Maps containing only desired attributes.
+ * An AttributesFilter object provides the algorithm to generate new
+ * Maps containing ALL the desired attributes.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
@@ -33,11 +33,10 @@ public class AttributesFilter extends Transformation {
 	
 
 	/**
-	 * Creates a new Map containing only the desired attributes.
-	 * The new Map contains the attributes resulting from the 
-	 * intersection of the sets of the original Map's keys and the 
-	 * desired keys.
-	 * @param originalObj The original Map containing all the attributes.
+	 * Creates a new Map containing ALL the desired attributes.
+	 * The new Map contains exactly the attributes wanted, if the original
+	 * map does not have them then they are created with a value of null.
+	 * @param originalObj The original Map.
 	 * @return The filtered Map.
 	 */
 	@Override
@@ -45,7 +44,6 @@ public class AttributesFilter extends Transformation {
 		Map<String, Object> filteredObj = new HashMap<>();
 		
 		for(String attr : wantedAttr)
-			if(originalObj.containsKey(attr))
 				filteredObj.put(attr, originalObj.get(attr));
 		
 		return filteredObj;

@@ -32,33 +32,39 @@ public class HttpReader implements Reader {
 	}
 
 	
-	/* (non-Javadoc)
-	 * Fails if the connection can't be established, is interrupted
-	 * or the HTTP response has an error status code.
-	 * Returns the whole response not chunks.
+	/**
+	 * Sends a GET request to a HTTP service.
+	 * @return The whole response not chunks.
+	 * @throws IOException If the connection can't be established, 
+	 *         is interrupted or the HTTP response has an error status code.
 	 * @see input.Reader#read()
 	 */
 	@Override
 	public String read() throws IOException {
 		Response response;
-		String reponseBody;
+		String responseBody;
 		
-		try {
-			response = client.newCall(request).execute();
-			reponseBody = response.body().string();
-			response.close();
-		} finally {
-			dataLeft = false;
-		}
+		response = client.newCall(request).execute();
+		responseBody = response.body().string();
+		response.close();
 		
-		if(!response.isSuccessful())
-			throw new IOException("HTTP server responded with an error status code");
+		dataLeft = false;
+		
+		if(!response.isSuccessful()) 
+			throw new IOException("HTTP server at " + request.url() + " responded with "
+					+ "error status code: " + responseBody);
 
-		return reponseBody;
+		return responseBody;
 	}
 
 
-	/* (non-Javadoc)
+	/**
+	 * Indicates whether logically speaking there is still more data to query from
+	 * the HTTP service.
+	 * After a connection failure it is considered that there is still more data to read.
+	 * Only after the whole data has been queried (regardless of the HTTP status code)
+	 * it is considered that there is no more data left to retrieve.
+	 * @return Whether there is more data to GET.
 	 * @see input.Reader#isDataLeft()
 	 */
 	@Override

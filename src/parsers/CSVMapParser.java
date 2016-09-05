@@ -2,6 +2,7 @@ package parsers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 import java.util.stream.Collectors;
 
 
@@ -15,8 +16,8 @@ import java.util.stream.Collectors;
  * "Map2.value1,Map2.value2"
  * <p>
  * According to the order of appearance of the Maps and 
- * the values in each Map. Assuming ','  is given as the
- * delimiter.
+ * the attributes of each one. Assuming ','  is set as the
+ * desired delimiter.
  * 
  * @author Andres Arturo Sanchez Dorantes
  *
@@ -36,16 +37,33 @@ public class CSVMapParser implements MapParser {
 	
 	
 	/** 
-	 * Parses a single Map into a CSV line.
+	 * Parses a single Map into a one CSV row.
 	 * In this specific case of parsing to a CSV-formated String it
 	 * is important to consider the order of the values in the Map.
 	 * {@link #delimiter} is used to separate values.
-	 * @return A String representing a Map as a single line.
+	 * @return A String representing a Map as a single row.
 	 */
-	public String parse(Map<String,Object> map) {
+	public String parseMap(Map<String,Object> map) {
 		return map.values().stream()
 				.map(obj -> obj+"")
 				.collect(Collectors.joining(delimiter));
+	}
+	
+	
+	/* (non-Javadoc)
+	 * Appends one row first with the columns titles.
+	 * @see parsers.MapParser#firstParsing(java.util.List)
+	 */
+	@Override
+	public String firstParsing(List<Map<String, Object>> maps) {
+		StringJoiner titles = new StringJoiner(delimiter);
+		
+		if(!maps.isEmpty())
+			maps.get(0).forEach((title,val) -> titles.add(title));
+		
+		return titles.toString()
+				+ System.getProperty("line.separator")
+				+ parseMaps(maps);
 	}
 
 
@@ -56,10 +74,18 @@ public class CSVMapParser implements MapParser {
 	@Override
 	public String parseMaps(List<Map<String, Object>> maps) {
 		return maps.stream()
-				.map(this::parse)
+				.map(this::parseMap)
 				.collect(Collectors.joining(System.getProperty("line.separator")));
 	}
 
-	
 
+	/* (non-Javadoc)
+	 * @see parsers.MapParser#getEndings()
+	 */
+	@Override
+	public String getEndings() {
+		return "";
+	}
+
+	
 }

@@ -22,7 +22,8 @@ import org.junit.Test;
  * <p>
  * The functionality of AttributesFilter should be:
  * <ul>
- * <li>Create a new Map containing at most the desired attributes.
+ * <li>Create a new Map containing ALL the desired attributes of an original one.
+ * <li>Apply the filter to every Map in a list.
  * </ul>
  * 
  * @author Andres Arturo Sanchez Dorantes
@@ -33,9 +34,7 @@ public class AttributesFilterTest {
 	private Map<String, Object> originalObj;
 	private AttributesFilter filter;
 	
-	/**
-	 * @throws java.lang.Exception
-	 */
+	
 	@Before
 	public void setUp() throws Exception {
 		originalObj = new HashMap<String, Object>();
@@ -66,8 +65,10 @@ public class AttributesFilterTest {
 		originalObj.remove("attr2.attr2_2");
 		Map<String, Object> result = filter.transformMap(originalObj);
 		
-		assertEquals(2, result.values().size());
+		assertEquals(3, result.values().size());
 		assertEquals("val1", result.get("attr1"));
+		assertTrue(result.containsKey("attr2.attr2_2"));
+		assertEquals(null, result.get("attr2.attr2_2"));
 		assertEquals("val6", result.get("attr3.attr3_1.1"));
 	}
 

@@ -13,7 +13,7 @@ public interface Writer {
 	
 	/**
 	 * Writes data to a specific resource or service.
-	 * @param write The encoded data to write to the service.
+	 * @param write The formated data to write to the service.
 	 * @throws IOException If the resource can't be reached, the 
 	 *         connection is lost or the data is otherwise corrupted.
 	 */

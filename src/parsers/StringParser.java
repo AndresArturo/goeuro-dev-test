@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Provides a common interface to parsers that transform String 
+ * Provides a common interface for parsers that transform String 
  * representations of data into flat Maps representing the different
  * nested levels of objects by {@link #DELIMITER}-separated key
  * hierarchies.
  * <p>
  * For example: 
- * If we had a JSON of the form {"attr1":"val1","attr2":{"attr1":val2,"attr2":"val3"}}
- * The expected Map should be ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
+ * Given a JSON of the form {"attr1":"val1","attr2":{"attr1":val2,"attr2":"val3"}}
+ * The Map parsed should be ["attr1":"val1","attr2.attr1":val2,"attr2.attr2":"val3"]
  * <p>
  * @author Andres Arturo Sanchez Dorantes
  */
@@ -23,15 +23,18 @@ public interface StringParser {
 	 * in the keys of the Maps.
 	 * Should not be modified after configuration.
 	 */
-	public static String DELIMITER = ".";
+	public static StringBuilder DELIMITER = new StringBuilder(".");
 
 	/**
-	 * Parses a raw string into the final Map objects and stores them.
+	 * Parses a raw string into the final Map objects.
 	 * The data to parse can either represent a single object or an
-	 * array of them, in which case it will parse every one into a
+	 * array of them, in which case it should parse each one into a
 	 * new Map.
-	 * @param stringInfo A String representing a JSON object.
-	 * @throws ParseException If the String is not a valid JSON object.
+	 * <p>
+	 * If there is no data to parse, i.e. a non-null empty String, the result
+	 * of parsing should be an empty list.
+	 * @param stringInfo A formatted String representing the data.
+	 * @throws ParseException If the String is not valid for the format intended to parse.
 	 * @return A List containing the resulting Maps.
 	 */
 	public List<Map<String,Object>> parseString(String stringData) throws ParseException;

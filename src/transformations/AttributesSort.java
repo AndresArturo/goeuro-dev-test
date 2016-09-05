@@ -10,8 +10,7 @@ import java.util.Map;
 /**
  * AttributesSort is the class responsible for rearranging the
  * attributes of a Map given a static predefined order of them.
- * Represents a sort of attributes on a per-element basis, not
- * a sort of the list of Maps.
+ * Sorts the attributes on a per-Map basis, not the list of Maps.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
@@ -37,7 +36,7 @@ public class AttributesSort extends Transformation {
 	 * Creates a new ordered Map.
 	 * The new Map contains all the attributes of the original Map whose
 	 * keys match the given order plus the rest of them unordered.
-	 * @param originalMap The original Map to order..
+	 * @param originalMap The original Map to order.
 	 * @return The ordered Map.
 	 */
 	@Override

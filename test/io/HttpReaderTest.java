@@ -5,6 +5,7 @@ package io;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,10 +20,10 @@ import okhttp3.mockwebserver.MockWebServer;
 
 
 /**
- * Tests the HTTP Reader class.
+ * Tests the HTTPReader class.
  * The class responsibility is to read raw data from HTTP GET petitions.
  * <p>
- * The functionality of HTTP Reader should be:
+ * The functionality of HTTPReader should be:
  * <ul>
  * <li>Carry out GET requests appropriately.
  * <li>Give access to the response body as a String.
@@ -82,9 +83,9 @@ public class HttpReaderTest {
 	    
 	    try {
 	    	reader.read();
-	    	assertTrue(false);
+	    	fail("HTTP status code not checked");
 	    } catch (IOException e) {
-			assertEquals("HTTP server responded with an error status code", e.getMessage());
+			assertTrue(e.getMessage().contains("error status code"));
 		}
 	}
 	

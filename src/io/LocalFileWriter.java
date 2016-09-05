@@ -30,6 +30,7 @@ public class LocalFileWriter implements Writer {
 	 */
 	@Override
 	public void close() {
+		writer.flush();
 		writer.close();
 	}
 

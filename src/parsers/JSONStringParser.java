@@ -25,7 +25,7 @@ public class JSONStringParser implements StringParser {
 
 	
 	/* (non-Javadoc)
-	 * @see parsers.Parser#parseString(java.lang.String)
+	 * @see Parser#parseString(java.lang.String)
 	 */
 	@Override
 	public List<Map<String,Object>> parseString(String rawJSON) throws ParseException {
@@ -43,10 +43,6 @@ public class JSONStringParser implements StringParser {
 		}
 		
 		jArray.forEach(jObj -> objMapped.add(parseSingleJSON(jObj)));
-		
-//		objMapped = StreamSupport.stream(jArray.spliterator(), false)
-//				.map(jObj -> parse(jObj))
-//				.collect(Collectors.toCollection(LinkedList::new));
 		
 		return objMapped;
 	}
