@@ -6,24 +6,24 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * FilterAndSortAttributes responsibility is to Filter and then Sort a Map
+ * AttributesFilterAndSort responsibility is to Filter and then Sort a Map
  * based on a given criteria for its attributes.
  * @author Andres Arturo Sanchez Dorantes
  *
  */
-public class FilterAndSortAttributes extends Transformation {
+public class AttributesFilterAndSort extends Transformation {
 	
 	private AttributesSort sorter;
 	private AttributesFilter filter;
 	
 	
-	public FilterAndSortAttributes(List<String> attributes) {
+	public AttributesFilterAndSort(List<String> attributes) {
 		sorter = new AttributesSort(attributes);
 		filter = new AttributesFilter(attributes);
 	}
 	
 
-	public FilterAndSortAttributes(String... attributes) {
+	public AttributesFilterAndSort(String... attributes) {
 		this(Arrays.asList(attributes));
 	}
 	
