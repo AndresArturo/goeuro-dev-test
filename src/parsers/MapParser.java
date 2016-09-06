@@ -22,6 +22,7 @@ public interface MapParser {
 
 	/**
 	 * Parses flat Maps to a specific String representation of it.
+	 * This method can be called multiple times during the parsing process.
 	 * @param maps The list of Maps to parse.
 	 * @return A String parsed with certain format.
 	 */

@@ -75,7 +75,8 @@ public class CSVMapParser implements MapParser {
 	public String parseMaps(List<Map<String, Object>> maps) {
 		return maps.stream()
 				.map(this::parseMap)
-				.collect(Collectors.joining(System.getProperty("line.separator")));
+				.collect(Collectors.joining(System.getProperty("line.separator"))) //Line break between parsed Maps
+				+ System.getProperty("line.separator"); //Line break after last parsed Map
 	}
 
 
