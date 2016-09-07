@@ -2,6 +2,8 @@
 
 This is my solution to the **Java Developer Test** for applicants to **GoEuro**, for details about the proposed problem go to [GoEuro dev-test](https://github.com/goeuro/dev-test).
 
+[GoEuroTest.jar](/GoEuroTest.jar).
+
 In the following sections I briefly explain some characteristics I would like to highlight about both the development process and the resulting solution itself.
 
 ## Architecture
@@ -20,7 +22,7 @@ As to adhere to the statement of:
 the solution is implemented with only one extraction and one loading thread at a time, however, thanks to the *single responsibility principle* I highly emphasized during the development, the solution could be easily extended to manage concurrent extraction from multiple sources and even to multiple destinations at a time by modifying only the `etl.ETL` class.
 
 ## Development process
-If it is true that I envisioned the main architecture of the solution after analyzing the requirements, the design and implementation of more specific details where decided through a process of Test-Driven Development (which for lack of expertise in the subject I refuse to call BDD) as explained below:
+If it is true that I envisioned the main architecture of the solution after analyzing the requirements, the design and implementation of more specific details were decided through a process of Test-Driven Development (which for lack of expertise in the subject I refuse to call BDD) as explained below:
 
 1. Define the next task to implement.
 2. Define a class to achieve it and assign the task as its only responsibility.
@@ -58,7 +60,7 @@ Would be parsed into the Map:
 ```
 Once the data is represented in this format it can then be transformed internally and finally re-parsed to the destination's data format.
 
-Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram is showed below.
+Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram after refactoring of some code smells (like *class extraction* for *duplicated code* in the transformation classes) is showed below.
 
 ![Class diagram](/classes.png)
 
@@ -85,8 +87,15 @@ csv_path=GoEuroTest.csv
 ```
 
 ## Final Notes
-The following are decisions I deliberately took which in a real formal setting I would have talked with the team to agree upon first:
+The following are decisions I deliberately took which in a real formal setting I would have first talked with the team to agree upon:
 
-- Throughout the code I implemented different techniques and strategies to illustrate how I am acquainted with them, such as iteration and recursion, different implementations of threading in Java (CompletableFutures, Runnables and Callables), thread synchronization (by intrinsic lock which turned out to be enough), streams, lambdas, method references, anonymous classes, etc. I would have adhere to the team's coding standards to choose among them.
+- Throughout the code I implemented different techniques and strategies to illustrate how I am acquainted with them and also my disposition to learn and how I can research by myself, such as iteration and recursion, different implementations of threading in Java (CompletableFutures, Runnables and Callables), thread synchronization (by intrinsic lock which turned out to be enough), streams, lambdas, method references, anonymous classes, etc. I would have adhere to the team's coding standards to choose among them.
 - Given the size and nature of the application I decided to use state-of-the-art `List<Map>`'s to handle the data, in a more formal long-term setting I would have probably used a wrapper class upon agreement with the team.
 - In this particular scenario where the application extracts data only from one source in one data format, the solution I developed can actually be left behind in performance tests, in a real setting I would have evaluated the priority and trade-offs between performance and maintainability and extensibility.
+
+## Dependencies
+To build the solution the following dependencies are required:
+
+- OkHTTP 3.4.1
+- Okio 1.10.0
+- [JSON-java 20160810](https://github.com/stleary/JSON-java)
