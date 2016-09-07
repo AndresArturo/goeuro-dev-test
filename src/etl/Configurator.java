@@ -52,10 +52,18 @@ public class Configurator {
 		reader = new HttpReader(props.getProperty("API_URL", "http://api.goeuro.com/api/v2/position/suggest/en/") + args[0]);
 		inParser = new JSONStringParser();
 		StringParser.DELIMITER.setLength(0);
-		StringParser.DELIMITER.append(props.getProperty("attributes_delimiter", ".")); 
-		extractor = new Extractor(reader, inParser, 
-								  Integer.parseInt(props.getProperty("reconnection_attempts", "3")), 
-								  Long.parseLong(props.getProperty("reconnection_delay", "1")) * 1000);
+		StringParser.DELIMITER.append(props.getProperty("attributes_delimiter", "."));
+		int connectionAttempts = 1;
+		int reconnectionDelay = 1000;
+		try {
+			connectionAttempts = Integer.parseInt(props.getProperty("connection_attempts", "3"));
+			reconnectionDelay *= Long.parseLong(props.getProperty("reconnection_delay", "1"));
+			if(reconnectionDelay < 0) reconnectionDelay = 0;
+		} catch(NumberFormatException ex) {
+			System.err.println("Bad configuration file");
+			System.exit(2);
+		}
+		extractor = new Extractor(reader, inParser, connectionAttempts, reconnectionDelay);
 		
 		transformation = new AttributesFilterAndSort(props.getProperty("attributes_wanted", 
 				"_id;name;type;geo_position.latitude;geo_position.longitude").split(";"));
@@ -64,10 +72,10 @@ public class Configurator {
 		
 		outParser = new CSVMapParser(props.getProperty("csv_delimiter", ","));
 		try {
-			writer = new LocalFileWriter(props.getProperty("csv_path", "goeuro.csv"));
+			writer = new LocalFileWriter(props.getProperty("csv_path", "GoEuroTest.csv"));
 		} catch (FileNotFoundException e) {
 			System.err.println("Not possible to write CSV file");
-			System.exit(2);
+			System.exit(3);
 		}
 		loader = new Loader(writer, outParser);
 		

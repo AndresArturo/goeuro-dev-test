@@ -72,7 +72,7 @@ public class ExtractorTest {
 	
 	
 	/*
-	 * Due to limitations of the MockServer to be rebooted this test case is intended to be carried out
+	 * Due to limitations of the MockServer to be rebooted, this test case is intended to be carried out
 	 * manually by starting it with no access to Internet and then having 20 seconds to regain physical
 	 * access.
 	 */
