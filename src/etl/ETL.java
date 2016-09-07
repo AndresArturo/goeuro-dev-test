@@ -35,7 +35,8 @@ public class ETL implements Runnable {
 	{	
 		LinkedList<CompletableFuture<Void>> futureETLs = new LinkedList<>();
 		
-		while(extractor.canExtract()) { //Implements some pagination
+		while(extractor.canExtract()) //Implements pagination
+		{ 
 			List<Map<String,Object>> extractedMaps = extractor.extract();
 			
 			if(extractedMaps != null)

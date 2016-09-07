@@ -31,18 +31,27 @@ public class JSONStringParser implements StringParser {
 	public List<Map<String,Object>> parseString(String rawJSON) throws ParseException {
 		LinkedList<Map<String,Object>> objMapped; //Objects mapped
 		JSONArray jArray;
+		JSONObject jObject;
+		boolean isArray;
 		
-		if(!rawJSON.startsWith("["))
-			rawJSON = "[" + rawJSON + "]";
+		objMapped = new LinkedList<>();
 		
 		try {
 			jArray = new JSONArray(rawJSON);
-			objMapped = new LinkedList<>();
+			jArray.forEach(jObj -> objMapped.add(parseSingleJSON(jObj)));
+			isArray = true;
 		} catch (JSONException e) {
-			throw new ParseException("Error parsing the raw JSON string", 0);
+			isArray = false;
 		}
 		
-		jArray.forEach(jObj -> objMapped.add(parseSingleJSON(jObj)));
+		if(!isArray)
+			try {
+				jObject = new JSONObject(rawJSON);
+				objMapped.add(parseSingleJSON(jObject));
+			} catch (JSONException e) {
+				throw new ParseException("Error parsing the raw JSON string", 0);
+			}
+			
 		
 		return objMapped;
 	}
@@ -62,8 +71,10 @@ public class JSONStringParser implements StringParser {
 		
 		if(jObj instanceof JSONObject)
 			parseJSON(map, "", (JSONObject) jObj);
-		else
+		else if(jObj instanceof JSONArray)
 			parseJSON(map, "", (JSONArray) jObj);
+		else
+			map.put(jObj.toString(), parseJSONVal(jObj));
 		
 		return map;
 	}
