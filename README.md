@@ -90,3 +90,10 @@ The following are decisions I deliberately took which in a real formal setting I
 - Throughout the code I implemented different techniques and strategies to illustrate how I am acquainted with them, such as iteration and recursion, different implementations of threading in Java (CompletableFutures, Runnables and Callables), thread synchronization (by intrinsic lock which turned out to be enough), streams, lambdas, method references, anonymous classes, etc. I would have adhere to the team's coding standards to choose among them.
 - Given the size and nature of the application I decided to use state-of-the-art `List<Map>`'s to handle the data, in a more formal long-term setting I would have probably used a wrapper class upon agreement with the team.
 - In this particular scenario where the application extracts data only from one source in one data format, the solution I developed can actually be left behind in performance tests, in a real setting I would have evaluated the priority and trade-offs between performance and maintainability and extensibility.
+
+## Dependencies
+To build the solution the following dependencies are required:
+
+- OkHTTP 3.4.1
+- Okio 1.10.0
+- [JSON-java 20160810](https://github.com/stleary/JSON-java)
