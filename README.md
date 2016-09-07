@@ -53,7 +53,7 @@ Would be parsed into the Map:
 [
  "fullName":"Potsdam, Germany",
  "geo_position.latitude":52.39886,
- "geo_position.longitude":
+ "geo_position.longitude":13.06566
 ]
 ```
 Once the data is represented in this format it can then be transformed internally and finally re-parsed to the destination's data format.
@@ -63,7 +63,7 @@ Throughout the development process most of the architectural decisions were take
 ![Class diagram](/classes.png)
 
 ### Configuration File
-The program is executed as requested by passing the city name to query as a parameter. Besides that, a configuration file with the name `dev-test.conf` may be created to change some behaviours as it's self-explained in its structure:
+The program is executed as requested by passing the city name to query as a parameter. Furthermore, a configuration file with the name `dev-test.conf` may be created to change some behaviours as it's self-explained in its structure:
 ```
 #API endpoint to query
 API_URL=http://api.goeuro.com/api/v2/position/suggest/en/
