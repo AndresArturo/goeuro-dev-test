@@ -2,6 +2,8 @@
 
 This is my solution to the **Java Developer Test** for applicants to **GoEuro**, for details about the proposed problem go to [GoEuro dev-test](https://github.com/goeuro/dev-test).
 
+[GoEuroTest.jar](/GoEuroTest.jar).
+
 In the following sections I briefly explain some characteristics I would like to highlight about both the development process and the resulting solution itself.
 
 ## Architecture
