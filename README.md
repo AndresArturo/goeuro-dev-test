@@ -20,7 +20,7 @@ As to adhere to the statement of:
 the solution is implemented with only one extraction and one loading thread at a time, however, thanks to the *single responsibility principle* I highly emphasized during the development, the solution could be easily extended to manage concurrent extraction from multiple sources and even to multiple destinations at a time by modifying only the `etl.ETL` class.
 
 ## Development process
-If it is true that I envisioned the main architecture of the solution after analyzing the requirements, the design and implementation of more specific details where decided through a process of Test-Driven Development (which for lack of expertise in the subject I refuse to call BDD) as explained below:
+If it is true that I envisioned the main architecture of the solution after analyzing the requirements, the design and implementation of more specific details were decided through a process of Test-Driven Development (which for lack of expertise in the subject I refuse to call BDD) as explained below:
 
 1. Define the next task to implement.
 2. Define a class to achieve it and assign the task as its only responsibility.
