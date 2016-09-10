@@ -36,7 +36,7 @@ If it is true that I envisioned the main architecture of the solution after anal
 
 > as you would do for production code
 
-  I coded automatic tests when possible and manually tested everywhere because that's the minimum requirement I need to fulfill to allow myself to put code into production. An alluring example of this (from my point of view) is the test case `etl.ExtractorTest.testConnectionErrorHandling()` where manual actions need to be carried out along with running it. If it is not something I would do in a *Continuos Deployment* environment, I consider it adecuate for this particular case and I think it shows how much emphasis I put in making sure the code works. 
+&nbsp;&nbsp;&nbsp;I coded automatic tests when possible and manually tested everywhere because that's the minimum requirement I need to fulfill to allow myself to put code into production. An alluring example of this (from my point of view) is the test case `etl.ExtractorTest.testConnectionErrorHandling()` where manual actions need to be carried out along with running it. If it is not something I would do in a *Continuos Deployment* environment, I consider it adecuate for this particular case and I think it shows how much emphasis I put in making sure the code works. 
 
 ## Implementation
 The main algorithm behind the solution consists in parsing the information extracted from any kind of source into `Map` collections representing objects, whose attributes are '.'-separated by levels of nesting. 
@@ -60,7 +60,7 @@ Would be parsed into the Map:
 ```
 Once the data is represented in this format it can then be transformed internally and finally re-parsed to the destination's data format.
 
-Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram after refactoring of some code smells (like *class extraction* for *duplicated code* in the transformation classes) is showed below.
+Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram after refactoring some code smells (like *superclass extraction* for *duplicated code* in the transformation classes) is showed below.
 
 ![Class diagram](/classes.png)
 
