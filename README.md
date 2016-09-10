@@ -60,7 +60,7 @@ Would be parsed into the Map:
 ```
 Once the data is represented in this format it can then be transformed internally and finally re-parsed to the destination's data format.
 
-Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram after refactoring of some code smells (like class extraction for duplicated code in the transformation classes) is showed below.
+Throughout the development process most of the architectural decisions were taken in accordance with the SOLID principles, design patterns and personal expertise. An overview of the final class diagram after refactoring of some code smells (like *class extraction* for *duplicated code* in the transformation classes) is showed below.
 
 ![Class diagram](/classes.png)
 
